@@ -86,7 +86,7 @@ def feed_noticias():
         noticias = response.json().get("data")
 
         if noticias:
-            for noticia in noticias[:10]:  
+            for noticia in noticias[:5]:  
                 st.write(f"**{noticia['title']}**")
                 st.write(noticia['description'])
                 st.write(f"[Leia mais]({noticia['url']})")
