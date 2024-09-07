@@ -96,6 +96,21 @@ def feed_noticias():
             st.write("Nenhuma notícia disponível no momento.")
     else:
         st.write("Erro ao carregar notícias. Verifique sua chave de API ou limite de uso.")
+    
+    # Chat LangFlow - integrado apenas na aba de notícias
+    html_code = """
+    <script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.6/dist/build/static/js/bundle.min.js"></script>
+
+    <langflow-chat
+      window_title="Mercado Financeiro Atendimento"
+      flow_id="3841d13b-70c6-441d-b594-b1f288aea0cf"
+      host_url="http://localhost:7860"
+      api_key="sk-_mWX47Dh_jg1zvQ4ALOugqC9PIWkegEkEGQP2Bh2880"
+    ></langflow-chat>
+    """
+
+    # Exibir o HTML embutido com components.html
+    components.html(html_code, height=800)
 
 # Função para a calculadora de impostos
 def calculadora_impostos():
@@ -142,22 +157,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-# Defina o título do app no Streamlit
-st.title("Chat LangFlow")
-
-# Insira o código HTML e JavaScript dentro do streamlit usando components.html
-html_code = """
-<script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.6/dist/build/static/js/bundle.min.js"></script>
-
-<langflow-chat
-  window_title="Mercado Financeiro Atendimento"
-  flow_id="3841d13b-70c6-441d-b594-b1f288aea0cf"
-  host_url="http://localhost:7860"
-  api_key="sk-_mWX47Dh_jg1zvQ4ALOugqC9PIWkegEkEGQP2Bh2880"
-></langflow-chat>
-"""
-
-# Exibir o HTML embutido com components.html
-components.html(html_code, height=800)
