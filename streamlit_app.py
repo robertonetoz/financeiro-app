@@ -75,7 +75,7 @@ def chat_educacional():
                 "verbose": 0
             },
             "OpenAIModel-n4CxW": {
-                "api_key": "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",
+                "api_key": "",
                 "input_value": pergunta,
                 "json_mode": False,
                 "max_tokens": None,
