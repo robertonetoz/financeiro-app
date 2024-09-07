@@ -4,3 +4,4 @@ streamlit
 yfinance
 pandas-datareader
 prophet
+langflow
