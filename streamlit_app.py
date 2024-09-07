@@ -67,11 +67,6 @@ def chat_educacional():
     if st.button("Perguntar"):
         st.write(f"Pergunta: {pergunta}")
         
-        openai_api_key = os.getenv("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")
-        if openai_api_key is None:
-            st.error("A chave da API do OpenAI não foi encontrada. Verifique as variáveis de ambiente.")
-            return
-
         TWEAKS = {
             "SequentialCrewComponent-PG3Bu": {
                 "max_rpm": 100,
@@ -81,7 +76,7 @@ def chat_educacional():
                 "verbose": 0
             },
             "OpenAIModel-n4CxW": {
-                "api_key": "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",
+                "api_key": "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",
                 "input_value": pergunta,
                 "json_mode": False,
                 "max_tokens": None,
@@ -125,7 +120,7 @@ def feed_noticias():
 
     <langflow-chat
       window_title="Mercado Financeiro Atendimento"
-      flow_id="3841d13b-70c6-441d-b594-b1f288aea0cf"
+      flow_id="37e6036f-9e04-4e26-b83c-5783a46b98c5"
       host_url="http://localhost:7860"
       api_key="sk-_mWX47Dh_jg1zvQ4ALOugqC9PIWkegEkEGQP2Bh2880"
     ></langflow-chat>
