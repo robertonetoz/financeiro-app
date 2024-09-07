@@ -75,25 +75,96 @@ def chat_educacional():
         # Aqui você pode usar um modelo de IA para responder a pergunta
         st.write("Resposta: Um ETF (Exchange-Traded Fund) é um fundo de investimento que pode ser negociado como uma ação na bolsa de valores.")
 
-# Função para o feed de notícias
+# Função para carregar o widget de chat como um widget flutuante
+def carregar_widget_flutuante():
+    html_code = """
+    <style>
+    /* Estilos para o botão de chat flutuante */
+    #chat-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 50px;
+        cursor: pointer;
+        z-index: 9999;
+        font-size: 16px;
+    }
+
+    /* Estilos para a janela de chat flutuante */
+    #chat-widget {
+        display: none;
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        width: 400px;
+        height: 500px;
+        border: 1px solid #007bff;
+        border-radius: 10px;
+        z-index: 9999;
+        background-color: white;
+    }
+
+    /* Cabeçalho da janela de chat */
+    #chat-header {
+        background-color: #007bff;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    /* Estilos para o conteúdo do chat */
+    #chat-content {
+        padding: 10px;
+        height: 450px;
+        overflow-y: auto;
+    }
+    </style>
+
+    <!-- Botão flutuante para abrir o chat -->
+    <button id="chat-button">Chat</button>
+
+    <!-- Janela flutuante de chat -->
+    <div id="chat-widget">
+        <div id="chat-header">Mercado Financeiro Atendimento</div>
+        <div id="chat-content">
+            <script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.6/dist/build/static/js/bundle.min.js"></script>
+            <langflow-chat
+                window_title="Mercado Financeiro Atendimento"
+                flow_id="3841d13b-70c6-441d-b594-b1f288aea0cf"
+                host_url="http://localhost:7860"
+                api_key="sk-_mWX47Dh_jg1zvQ4ALOugqC9PIWkegEkEGQP2Bh2880"
+            ></langflow-chat>
+        </div>
+    </div>
+
+    <script>
+    // Script para alternar a visibilidade do chat ao clicar no botão
+    document.getElementById('chat-button').onclick = function() {
+        var chatWidget = document.getElementById('chat-widget');
+        if (chatWidget.style.display === 'none') {
+            chatWidget.style.display = 'block';
+        } else {
+            chatWidget.style.display = 'none';
+        }
+    };
+    </script>
+    """
+    components.html(html_code, height=0, width=0)
+
+# Função para exibir notícias
 def feed_noticias():
     st.title("Pesquise sua notícia sobre o mercado financeiro")
+    
+    # Carregar o widget de chat flutuante
+    carregar_widget_flutuante()
 
-    # Chat LangFlow - integrado no início da aba de notícias
-    html_code = """
-    <script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.6/dist/build/static/js/bundle.min.js"></script>
-
-    <langflow-chat
-      window_title="Mercado Financeiro Atendimento"
-      flow_id="3841d13b-70c6-441d-b594-b1f288aea0cf"
-      host_url="http://localhost:7860"
-      api_key="sk-_mWX47Dh_jg1zvQ4ALOugqC9PIWkegEkEGQP2Bh2880"
-    ></langflow-chat>
-    """
-    # Exibir o HTML embutido com components.html
-    components.html(html_code, height=800)
-
-    # Mostrar notícias após o chat
+    # Exibir notícias abaixo do chat
     st.title("Últimas notícias do mercado financeiro")
 
     api_key = "O7wcngTJlP1SKY44QzqLuaKBXwjrJzcSZanGcyYD"
@@ -102,7 +173,6 @@ def feed_noticias():
 
     if response.status_code == 200:
         noticias = response.json().get("data")
-
         if noticias:
             for noticia in noticias[:5]:  
                 st.write(f"**{noticia['title']}**")
