@@ -3,6 +3,26 @@ import yfinance as yf
 import plotly.graph_objects as go
 import pandas as pd
 import requests
+import streamlit.components.v1 as components
+
+# Defina o título do app no Streamlit
+st.title("Integração com Langflow API")
+
+# Insira o código HTML e JavaScript dentro do streamlit usando components.html
+html_code = """
+<script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.6/dist/build/static/js/bundle.min.js"></script>
+
+<langflow-chat
+  window_title="api-connect"
+  flow_id="1c091528-eacd-4c5c-a018-8b5362438ae9"
+  host_url="https://mercado-financeiro.streamlit.app/"
+  api_key="sk-_mWX47Dh_jg1zvQ4ALOugqC9PIWkegEkEGQP2Bh2880"
+></langflow-chat>
+"""
+
+# Exibir o HTML embutido com components.html
+components.html(html_code, height=800)
+
 
 # Função para exibir o formulário de perfil do investidor
 def perfil_investidor():
