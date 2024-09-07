@@ -154,7 +154,7 @@ html_code = """
 <langflow-chat
   window_title="Mercado Financeiro Atendimento"
   flow_id="3841d13b-70c6-441d-b594-b1f288aea0cf"
-  host_url="https://mercado-financeiro.streamlit.app/"
+  host_url="http://localhost:7860"
   api_key="sk-_mWX47Dh_jg1zvQ4ALOugqC9PIWkegEkEGQP2Bh2880"
 ></langflow-chat>
 """
