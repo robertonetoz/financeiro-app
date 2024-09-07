@@ -144,7 +144,6 @@ if __name__ == "__main__":
     main()
 
 
-# Defina o título do app no Streamlit
 st.title("Integração com Langflow API")
 
 # Insira o código HTML e JavaScript dentro do streamlit usando components.html
