@@ -4,13 +4,12 @@ import plotly.graph_objects as go
 import pandas as pd
 import requests
 import streamlit.components.v1 as components
-
+from langflow.load import run_flow_from_json
 
 # Função para exibir o formulário de perfil do investidor
 def perfil_investidor():
     st.title("Análise de Perfil do Investidor")
 
-    # Coletando dados do usuário
     idade = st.slider("Idade", 18, 100)
     risco = st.selectbox("Nível de risco", ["Conservador", "Moderado", "Agressivo"])
     objetivo = st.text_input("Objetivo financeiro")
@@ -18,13 +17,11 @@ def perfil_investidor():
 
     if st.button("Analisar perfil"):
         st.write(f"Perfil analisado: Idade {idade}, Risco {risco}, Objetivo: {objetivo}, Prazo: {prazo}")
-        # Aqui você pode adicionar a lógica para categorizar o investidor
 
 # Função para recomendar investimentos
 def recomendacoes_investimentos():
     st.title("Recomendações de Investimentos")
 
-    # Exibir recomendações baseadas no perfil de risco
     perfil = st.radio("Selecione o perfil de risco", ["Conservador", "Moderado", "Agressivo"])
     if perfil == "Conservador":
         st.write("Recomendamos: Tesouro Direto, CDB, Fundos de Renda Fixa")
@@ -37,13 +34,11 @@ def recomendacoes_investimentos():
 def analise_mercado():
     st.title("Análise do Mercado Financeiro")
 
-    # Use a API do Yahoo Finance (via yfinance)
     mercado = st.selectbox("Selecione o índice do mercado", ["^GSPC", "^DJI", "^IXIC"])
     dados_mercado = yf.download(mercado, period="1mo", interval="1d")
 
     st.write(f"Exibindo dados do índice: {mercado}")
 
-    # Plotar gráfico
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=dados_mercado.index, y=dados_mercado['Close'], mode='lines', name='Fechamento'))
     st.plotly_chart(fig)
@@ -56,11 +51,9 @@ def analise_ativo():
     dados_ativo = yf.Ticker(ativo)
     historico = dados_ativo.history(period="1mo")
 
-    # Exibir informações
     st.write(f"Análise de {ativo}")
     st.write(f"Preço atual: {historico['Close'][-1]}")
 
-    # Plotar gráfico do ativo
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=historico.index, y=historico['Close'], mode='lines', name='Fechamento'))
     st.plotly_chart(fig)
@@ -69,18 +62,58 @@ def analise_ativo():
 def chat_educacional():
     st.title("Chat de Educação Financeira")
 
-    # Simulação de um chatbot simples
     pergunta = st.text_input("Pergunte sobre educação financeira", "O que é um ETF?")
     if st.button("Perguntar"):
         st.write(f"Pergunta: {pergunta}")
-        # Aqui você pode usar um modelo de IA para responder a pergunta
-        st.write("Resposta: Um ETF (Exchange-Traded Fund) é um fundo de investimento que pode ser negociado como uma ação na bolsa de valores.")
+        # Executar o fluxo LangFlow
+        TWEAKS = {
+            "SequentialCrewComponent-PG3Bu": {
+                "max_rpm": 100,
+                "memory": False,
+                "share_crew": False,
+                "use_cache": True,
+                "verbose": 0
+            },
+            "OpenAIModel-n4CxW": {
+                "api_key": "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",
+                "input_value": pergunta,
+                "json_mode": False,
+                "max_tokens": None,
+                "model_kwargs": {},
+                "model_name": "gpt-4o-mini",
+                "openai_api_base": "",
+                "output_schema": {},
+                "seed": 1,
+                "stream": False,
+                "system_message": "",
+                "temperature": 0.1
+            },
+            "ChatOutput-Kxx85": {
+                "data_template": "{text}",
+                "input_value": "",
+                "sender": "Machine",
+                "sender_name": "AI",
+                "session_id": "",
+                "should_store_message": True
+            },
+            "TextInput-MUVRZ": {
+                "input_value": pergunta
+            }
+        }
+
+        result = run_flow_from_json(
+            flow="Sequential Tasks Agent.json",
+            input_value=pergunta,
+            fallback_to_env_vars=True,
+            tweaks=TWEAKS
+        )
+
+        st.write("Resposta do Modelo:", result)
 
 # Função para o feed de notícias
 def feed_noticias():
     st.title("Pesquise sua notícia sobre o mercado financeiro")
 
-    # Chat LangFlow - integrado no início da aba de notícias
     html_code = """
     <script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.6/dist/build/static/js/bundle.min.js"></script>
 
@@ -91,10 +124,8 @@ def feed_noticias():
       api_key="sk-_mWX47Dh_jg1zvQ4ALOugqC9PIWkegEkEGQP2Bh2880"
     ></langflow-chat>
     """
-    # Exibir o HTML embutido com components.html
     components.html(html_code, height=800)
 
-    # Mostrar notícias após o chat
     st.title("Últimas notícias do mercado financeiro")
 
     api_key = "O7wcngTJlP1SKY44QzqLuaKBXwjrJzcSZanGcyYD"
