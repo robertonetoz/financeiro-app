@@ -75,7 +75,7 @@ def chat_educacional():
                 "verbose": 0
             },
             "OpenAIModel-n4CxW": {
-                "api_key": "",
+                "api_key": "OPENAI_API_KEY",
                 "input_value": pergunta,
                 "json_mode": False,
                 "max_tokens": None,
