@@ -77,7 +77,24 @@ def chat_educacional():
 
 # Função para o feed de notícias
 def feed_noticias():
-    st.title("Notícias do Mercado Financeiro")
+    st.title("Pesquise sua notícia sobre o mercado financeiro")
+
+    # Chat LangFlow - integrado no início da aba de notícias
+    html_code = """
+    <script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.6/dist/build/static/js/bundle.min.js"></script>
+
+    <langflow-chat
+      window_title="Mercado Financeiro Atendimento"
+      flow_id="3841d13b-70c6-441d-b594-b1f288aea0cf"
+      host_url="http://localhost:7860"
+      api_key="sk-_mWX47Dh_jg1zvQ4ALOugqC9PIWkegEkEGQP2Bh2880"
+    ></langflow-chat>
+    """
+    # Exibir o HTML embutido com components.html
+    components.html(html_code, height=800)
+
+    # Mostrar notícias após o chat
+    st.title("Últimas notícias do mercado financeiro")
 
     api_key = "O7wcngTJlP1SKY44QzqLuaKBXwjrJzcSZanGcyYD"
     url = f"https://api.marketaux.com/v1/news/all?api_token={api_key}&filter_entities=true&language=pt"
@@ -96,21 +113,6 @@ def feed_noticias():
             st.write("Nenhuma notícia disponível no momento.")
     else:
         st.write("Erro ao carregar notícias. Verifique sua chave de API ou limite de uso.")
-    
-    # Chat LangFlow - integrado apenas na aba de notícias
-    html_code = """
-    <script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.6/dist/build/static/js/bundle.min.js"></script>
-
-    <langflow-chat
-      window_title="Mercado Financeiro Atendimento"
-      flow_id="3841d13b-70c6-441d-b594-b1f288aea0cf"
-      host_url="http://localhost:7860"
-      api_key="sk-_mWX47Dh_jg1zvQ4ALOugqC9PIWkegEkEGQP2Bh2880"
-    ></langflow-chat>
-    """
-
-    # Exibir o HTML embutido com components.html
-    components.html(html_code, height=800)
 
 # Função para a calculadora de impostos
 def calculadora_impostos():
