@@ -6,6 +6,8 @@ import pandas as pd
 import requests
 import streamlit.components.v1 as components
 from langflow.load import run_flow_from_json
+import markdown
+from markdown2 import markdown as md2html
 
 # Estilo do Streamlit
 st.set_page_config(page_title="Aplicativo Financeiro", page_icon="📈", layout="wide")
@@ -67,40 +69,115 @@ def chat_educacional():
             st.write(f"Pergunta: {pergunta}")
 
             TWEAKS = {
-                "SequentialCrewComponent-PG3Bu": {
+                "SequentialCrewComponent-AoXgm": {
                     "max_rpm": 100,
                     "memory": False,
                     "share_crew": False,
                     "use_cache": True,
                     "verbose": 0
                 },
-                "OpenAIModel-n4CxW": {
-                    "api_key": "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",
-                    "input_value": pergunta,
-                    "json_mode": False,
-                    "max_tokens": None,
-                    "model_kwargs": {},
-                    "model_name": "gpt-4",
-                    "openai_api_base": "",
-                    "output_schema": {},
-                    "seed": 1,
-                    "stream": False,
-                    "system_message": "",
-                    "temperature": 0.1
-                },
-                "ChatOutput-Kxx85": {
+                "ChatOutput-kcdMZ": {
                     "data_template": "{text}",
-                    "input_value": "",
+                    "input_value": pergunta,
                     "sender": "Machine",
                     "sender_name": "AI",
                     "session_id": "",
                     "should_store_message": True
                 },
-                "TextInput-MUVRZ": {
+                "TextInput-q5KbN": {
                     "input_value": pergunta
+                },
+                "Prompt-m0j1W": {
+                    "template": "Topic: {topic}\n\nBuild a document about this document.",
+                    "topic": pergunta
+                },
+                "Prompt-vu8ox": {
+                    "template": "Topic: {topic}\n\nRevise this document.",
+                    "topic": pergunta
+                },
+                "Prompt-ajPtk": {
+                    "template": "Topic: {topic}\n\nEscreva um resumo conciso, mas informativo, trazendo especialmente as informações mais atuais e dados quantitativos.",
+                    "topic": pergunta
+                },
+                "SequentialTaskAgentComponent-pkN2P": {
+                    "agent_kwargs": {},
+                    "allow_code_execution": False,
+                    "allow_delegation": False,
+                    "async_execution": False,
+                    "backstory": "criar relatórios de informações relevantes, com dados e cenários econômicos.",
+                    "expected_output": "Bullet points and small phrases about the research topic.",
+                    "goal": "Buscar notícias mais atuais, especialmente do mesmo dia",
+                    "memory": True,
+                    "role": "Pesquisador",
+                    "task_description": "",
+                    "verbose": True
+                },
+                "SequentialTaskAgentComponent-tuwOX": {
+                    "agent_kwargs": {},
+                    "allow_code_execution": False,
+                    "allow_delegation": False,
+                    "async_execution": False,
+                    "backstory": "You are the editor of the most reputable journal in the world.",
+                    "expected_output": "Small paragraphs and bullet points with the corrected content.",
+                    "goal": "You should edit the Information provided by the Researcher to make it more palatable and to not contain misleading information.",
+                    "memory": True,
+                    "role": "Editor",
+                    "task_description": "",
+                    "verbose": True
+                },
+                "SequentialTaskAgentComponent-saOps": {
+                    "agent_kwargs": {},
+                    "allow_code_execution": False,
+                    "allow_delegation": False,
+                    "async_execution": False,
+                    "backstory": "Developed as a response to the growing need for real-time asset valuation in volatile markets, the agent was trained on vast datasets of historical market trends, corporate financials, and macroeconomic indicators. Initially designed to assist institutional investors, the agent quickly proved invaluable in predicting market shifts and asset pricing with high accuracy. Its algorithmic foundation is built on deep learning models that factor in both quantitative data and qualitative news analysis, making it highly versatile in various financial environments.",
+                    "expected_output": "Escreva as informações em tópicos curtos e informativos, em português.",
+                    "goal": "The agent's primary goal is to continuously monitor financial markets, assess the value of various assets, and predict future price movements. It aims to enhance decision-making for investors by offering accurate pricing models, risk assessments, and timely advice based on both historical and real-time data. The agent also adapts its strategies based on market shifts to optimize performance in varying conditions.",
+                    "memory": True,
+                    "role": "The agent is an expert in financial asset pricing, capaz de analisar dados de mercado, identificar tendências e fornecer informações em tempo real sobre avaliações de ativos. Utiliza modelos avançados para calcular previsões de preços, avaliar riscos e oferecer recomendações de investimento para uma variedade de instrumentos financeiros, como ações, títulos e commodities.",
+                    "task_description": "",
+                    "verbose": True
+                },
+                "DuckDuckGoSearchAPI-JZWLu": {
+                    "input_value": pergunta
+                },
+                "ChatInput-b5XMZ": {
+                    "files": "",
+                    "input_value": pergunta,
+                    "sender": "User",
+                    "sender_name": "User",
+                    "session_id": "",
+                    "should_store_message": True
+                },
+                "AIMLModel-FpMCK": {
+                    "aiml_api_base": "",
+                    "api_key": "c6d20860e1f24a6da42f1d496cf0a66b",
+                    "input_value": {
+                        "text_key": "text",
+                        "data": {
+                            "text": pergunta,
+                            "files": [],
+                            "timestamp": "2024-09-07 18:31:19",
+                            "flow_id": "1c091528-eacd-4c5c-a018-8b5362438ae9"
+                        },
+                        "default_value": "",
+                        "text": pergunta,
+                        "files": [],
+                        "session_id": "",
+                        "timestamp": "2024-09-07 18:31:19",
+                        "flow_id": "1c091528-eacd-4c5c-a018-8b5362438ae9"
+                    },
+                    "max_tokens": None,
+                    "model_kwargs": {},
+                    "model_name": "gpt-4-turbo",
+                    "seed": 1,
+                    "stream": False,
+                    "system_message": "",
+                    "temperature": 0.1
                 }
             }
 
+            # Executar o fluxo
             result = run_flow_from_json(
                 flow="Sequential Tasks Agent.json",
                 input_value=pergunta,
@@ -108,6 +185,7 @@ def chat_educacional():
                 tweaks=TWEAKS
             )
 
+            # Mostrar o resultado
             st.write("Resposta do Modelo:", result)
 
 
