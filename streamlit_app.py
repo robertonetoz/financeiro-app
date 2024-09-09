@@ -94,11 +94,11 @@ def analise_mercado_e_ativo():
         # Adiciona o widget Langflow
         st.write("### Para mais informações sobre ativos e do mercado financeiro, pergunte aqui!")
         html_code = """
-        <script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.6/dist/build/static/js/bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.6/dist/build/static/js/bundle.min.js""></script>
         <langflow-chat
           window_title="Ativos e Mercado Financeiro"
-          flow_id="1c652faf-49cf-4f8a-b106-79d9dd75c54b"
-          host_url="http://localhost:7860"
+          flow_id="20e96405-cb3f-43e4-b7b5-c66d9fb20822"
+          host_url="http://localhost:7860/"
         ></langflow-chat>
         """
         components.html(html_code, height=800)
