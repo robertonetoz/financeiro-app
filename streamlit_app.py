@@ -1,14 +1,9 @@
-import os
 import streamlit as st
 import yfinance as yf
 import plotly.graph_objects as go
 import pandas as pd
 import requests
 import streamlit.components.v1 as components
-from langflow.load import run_flow_from_json
-import markdown
-from markdown2 import markdown as md2html
-import openai
 
 # Estilo do Streamlit
 st.set_page_config(page_title="Aplicativo Financeiro", page_icon="📈", layout="wide")
